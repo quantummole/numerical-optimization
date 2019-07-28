@@ -23,10 +23,18 @@ class NewtonRaphson :
     
 if __name__ == '__main__' :
     func = lambda x : x**4-x**2-2
-    derivative = lambda x : 4*x**3 -2*x
+    derivative = lambda x : 4*x**3 - 2*x
     solver = NewtonRaphson(func,derivative)
     x,f = solver.search(3.1,100)
-    print(x,f)
+    print("Actual derivative ",x,f)
+
+    delta = 1e-4
+    derivative = lambda x : (func(x+delta)-func(x))/delta
+    solver = NewtonRaphson(func,derivative)
+    x,f = solver.search(3.1,100)
+    print("Derivative using finite difference ",x,f)
+
+
     xs = np.linspace(x-1,x+1,100)
     ys = [func(x) for x in xs]
     plt.plot(xs,ys)
